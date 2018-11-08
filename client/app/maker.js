@@ -1,3 +1,21 @@
+import {XYPlot, LineSeries, VerticalGridLines, HorizontalGridLines, XAxis, YAxis} from 'react-vis';
+import $ from "jquery";
+
+const sendAjax = (type, action, data, success) => {
+    $.ajax({
+        cache: false,
+        type: type,
+        url: action,
+        data: data,
+        dataType: "json",
+        success: success,
+        error: function(xhr, status, error){
+            var messageObj = JSON.parse(xhr.responseText);
+            handleError(messageObj.error);
+        }
+    })
+}
+
 const handleDomo = (e) => {
     e.preventDefault();
     $("#domoMessage").animate({ width: 'hide' }, 350);
@@ -53,6 +71,32 @@ const DomoList = function (props) {
     );
 };
 
+const Graph = (props) => {
+    const data = [
+        { x: 0, y: 8 },
+        { x: 1, y: 5 },
+        { x: 2, y: 4 },
+        { x: 3, y: 9 },
+        { x: 4, y: 1 },
+        { x: 5, y: 7 },
+        { x: 6, y: 6 },
+        { x: 7, y: 3 },
+        { x: 8, y: 2 },
+        { x: 9, y: 0 }
+    ];
+
+    return (
+        <XYPlot height={300} width={300}>
+            <VerticalGridLines />
+            <HorizontalGridLines />
+            <XAxis />
+            <YAxis />
+            <LineSeries data={data} />
+        </XYPlot>
+    );
+
+}
+
 const loadDomosFromServer = () => {
     sendAjax('GET', '/getDomos', null, (data) => {
         ReactDOM.render(
@@ -62,11 +106,18 @@ const loadDomosFromServer = () => {
     });
 };
 
+
+
 const setup = function (csrf) {
     ReactDOM.render(
         <DomoForm csrf={csrf} />,
         document.querySelector("#makeDomo")
     );
+
+    ReactDOM.render(
+        <Graph />,
+        document.querySelector("#vis")
+    )
 
     ReactDOM.render(
         <DomoList domos={[]} />,

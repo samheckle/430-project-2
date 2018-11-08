@@ -29,12 +29,25 @@ const handleSignup = (e) => {
     return false;
 }
 
+class NavLinks extends React.Component {
+    constructor(props){
+        super();
+    }
+    render() {
+        return(
+            <div>
+                <a href="/login"><img id="logo" src="/assets/img/face.png" alt="face logo"/></a>
+                <div className="navlink"><a id="loginButton" href="#" onClick={this.props.login}>Login</a></div>
+                <div className="navlink"><a id="signupButton" href="#" onClick={this.props.signIn}>Sign up</a></div>
+            </div>
+        );
+    }
+};
+
 const LoginWindow = (props) => {
     return(
         <form id="loginForm" name="loginForm" onSubmit={handleLogin} action="/login" method="POST" className="mainForm">
-            <label htmlFor="username">Username: </label>
             <input id="user" type="text" name="username" placeholder="username" />
-            <label htmlFor="pass">Password: </label>
             <input id="pass" type="password" name="pass" placeholder="password" />
             <input type="hidden" name="_csrf" value={props.csrf} />
             <input className="formSubmit" type="submit" value="Sign in" />
@@ -42,10 +55,10 @@ const LoginWindow = (props) => {
     );
 };
 
-const SignupWindow = (props) => {
+const SignupForm = (props) => {
     return(
         <form id="signupForm" name="signupForm" onSubmit={handleSignup} action="/signup" method="POST" className="mainForm">
-            <label htmlFor="username">Username: </label>
+
             <input id="user" type="text" name="username" placeholder="username" />
             <label htmlFor="pass">Password: </label>
             <input id="pass" type="password" name="pass" placeholder="password" />
@@ -57,42 +70,92 @@ const SignupWindow = (props) => {
     );
 };
 
-const createLoginWindow = (csrf) => {
-    ReactDOM.render(
-        <LoginWindow csrf={csrf} />,
-        document.querySelector("#content")
-    );
+class NavBarLogin extends React.Component {
+    constructor(props){
+        super();
+    }
+    render(){
+        return(
+                <nav>
+                    <NavLinks login={this.props.login} signIn={this.props.signIn} ></NavLinks>
+                    <LoginWindow csrf={this.props.csrf}></LoginWindow>
+                </nav>
+        );
+    }
+}
+
+class SignupWindow extends React.Component {
+    constructor(props){
+        super();
+    }
+    render(){
+        return(
+            <div>
+                <nav>
+                    <NavLinks login={this.props.login} signIn={this.props.signIn}></NavLinks>
+                </nav>
+                <SignupForm csrf={this.props.csrf}></SignupForm>
+            </div>
+        )
+    }
 };
 
-const createSignupWindow = (csrf) => {
-    ReactDOM.render(
-        <SignupWindow csrf={csrf} />,
-        document.querySelector("#content")
-    );
-};
+class Main extends React.Component {
+    render(){
+        return(
+            <div id="main">
+                <div className="homeContent" id="one">this describes what the app does</div>
+                <div className="homeContent" id="two"> this describes what the app could do for you</div>
+                <div className="homeContent" id="three">wowee sign up </div>
+            </div>
+        );
+    }
+}
 
-const setup = (csrf) => {
-    const loginButton = document.querySelector("#loginButton");
-    const signupButton = document.querySelector("#signupButton");
+class LoginPage extends React.Component {
+    constructor(props){
+        super();
+        this.state = {
+            signInClick: false,
+            loginClick: true
+        };
 
-    signupButton.addEventListener("click", (e) =>{
-        e.preventDefault();
-        createSignupWindow(csrf);
-        return false;
-    });
+        this.signIn = this.signIn.bind(this);
+        this.login = this.login.bind(this);
+    }
 
-    loginButton.addEventListener("click", (e)=>{
-        e.preventDefault();
-        createLoginWindow(csrf);
-        return false;
-    });
+    signIn() {
+        this.setState(state => ({
+            signInClick: true,
+            loginClick: false
+        }));
+    }
 
-    createLoginWindow(csrf);
-};
+    login(){
+        this.setState(state => ({
+            signInClick: false,
+            loginClick: true
+        }));
+    }
+
+    render() {
+        return(
+            <div>
+                {console.dir("csrf" + this.props.csrf)}
+                {this.state.loginClick ? <NavBarLogin login={this.login} signIn={this.signIn} csrf={this.props.csrf}></NavBarLogin> : null}
+                {this.state.signInClick ? <SignupWindow login={this.login} signIn={this.signIn} csrf={this.props.csrf}></SignupWindow> : null }
+                <Main></Main>
+            </div>
+        )
+    }
+}
 
 const getToken = () => {
     sendAjax('GET', '/getToken', null, (result) => {
-        setup(result.csrfToken);
+        ReactDOM.render(
+            <LoginPage csrf={result.csrfToken}></LoginPage>,
+            document.querySelector("body")
+        );
     });
 };
 
