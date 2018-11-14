@@ -1,7 +1,7 @@
 const handleLogin = (e) => {
     e.preventDefault();
-    $("#domoMessage").animate({width:'hide'}, 350);
-    if($("#user").val() ==''||$("#pass").val() ==''){
+    $("#domoMessage").animate({ width: 'hide' }, 350);
+    if ($("#user").val() == '' || $("#pass").val() == '') {
         handleError("RAWR! Username or password is empty");
         return false;
     }
@@ -13,14 +13,14 @@ const handleLogin = (e) => {
 const handleSignup = (e) => {
     e.preventDefault();
 
-    $("#domoMessage").animate({width:'hide'}, 350);
+    $("#domoMessage").animate({ width: 'hide' }, 350);
 
-    if($("#user").val() =='' || $("#pass").val() == '' || $("#pass2").val() == ''){
+    if ($("#user").val() == '' || $("#pass").val() == '' || $("#pass2").val() == '') {
         handleError("All fields required");
         return false;
     }
 
-    if($("#pass").val() !== $("#pass2").val()){
+    if ($("#pass").val() !== $("#pass2").val()) {
         handleError("passwords do not match");
         return false;
     }
@@ -29,121 +29,91 @@ const handleSignup = (e) => {
     return false;
 }
 
-class NavLinks extends React.Component {
-    constructor(props){
-        super();
-    }
-    render() {
-        return(
-            <div>
-                <a href="/login"><img id="logo" src="/assets/img/face.png" alt="face logo"/></a>
-                <div className="navlink"><a id="loginButton" href="#" onClick={this.props.login}>Login</a></div>
-                <div className="navlink"><a id="signupButton" href="#" onClick={this.props.signIn}>Sign up</a></div>
-            </div>
-        );
-    }
-};
-
 const LoginWindow = (props) => {
-    return(
-        <form id="loginForm" name="loginForm" onSubmit={handleLogin} action="/login" method="POST" className="mainForm">
-            <input id="user" type="text" name="username" placeholder="username" />
-            <input id="pass" type="password" name="pass" placeholder="password" />
-            <input type="hidden" name="_csrf" value={props.csrf} />
-            <input className="formSubmit" type="submit" value="Sign in" />
-        </form>
+    return (
+        <nav>
+            <form id="loginForm" name="loginForm" onSubmit={handleLogin} action="/login" method="POST" className="mainForm">
+                <input id="user" type="text" name="username" placeholder="username" />
+                <input id="pass" type="password" name="pass" placeholder="password" />
+                <input type="hidden" name="_csrf" value={props.csrf} />
+                <input className="formSubmit" type="submit" value="Sign in" />
+                <a id="signupButton" href="#" onClick={props.signUp}>Sign up</a>
+            </form>
+        </nav>
     );
 };
 
 const SignupForm = (props) => {
-    return(
-        <form id="signupForm" name="signupForm" onSubmit={handleSignup} action="/signup" method="POST" className="mainForm">
-
-            <input id="user" type="text" name="username" placeholder="username" />
-            <label htmlFor="pass">Password: </label>
-            <input id="pass" type="password" name="pass" placeholder="password" />
-            <label htmlFor="pass2">Password: </label>
-            <input id="pass2" type="password" name="pass2" placeholder="retype password" />
-            <input type="hidden" name="_csrf" value={props.csrf} />
-            <input className="formSubmit" type="submit" value="Sign Up" />
-        </form>
+    return (
+        <nav>
+            <form id="signupForm" name="signupForm" onSubmit={handleSignup} action="/signup" method="POST" className="mainForm">
+                <input id="user" type="text" name="username" placeholder="username" />
+                <input id="pass" type="password" name="pass" placeholder="password" />
+                <input id="pass2" type="password" name="pass2" placeholder="retype password" />
+                <input type="hidden" name="_csrf" value={props.csrf} />
+                <input className="formSubmit" type="submit" value="Sign Up" />
+                <a id="loginButton" href="#" onClick={props.login}>Return to Login</a>
+            </form>
+        </nav>
     );
 };
 
-class NavBarLogin extends React.Component {
-    constructor(props){
-        super();
-    }
-    render(){
-        return(
-                <nav>
-                    <NavLinks login={this.props.login} signIn={this.props.signIn} ></NavLinks>
-                    <LoginWindow csrf={this.props.csrf}></LoginWindow>
-                </nav>
-        );
-    }
-}
-
-class SignupWindow extends React.Component {
-    constructor(props){
-        super();
-    }
-    render(){
-        return(
-            <div>
-                <nav>
-                    <NavLinks login={this.props.login} signIn={this.props.signIn}></NavLinks>
-                </nav>
-                <SignupForm csrf={this.props.csrf}></SignupForm>
-            </div>
-        )
-    }
-};
-
 class Main extends React.Component {
-    render(){
-        return(
+    render() {
+        return (
             <div id="main">
-                <div className="homeContent" id="one">this describes what the app does</div>
-                <div className="homeContent" id="two"> this describes what the app could do for you</div>
-                <div className="homeContent" id="three">wowee sign up </div>
+                <div className="homeContent" id="one">
+                    <img src="./assets/img/workout1.jpg"></img>
+                    <p>this describes what the app does</p>
+                </div>
+                <div className="homeContent" id="two">
+
+                    <img src="./assets/img/workout2.jpg"></img>
+                    <p>this describes what the app could do for you</p>
+
+                </div>
+                <div className="homeContent" id="three">
+
+                    <img src="./assets/img/workout2.jpg"></img>
+                    <p>wowee sign up </p>
+
+                </div>
             </div>
         );
     }
 }
 
 class LoginPage extends React.Component {
-    constructor(props){
+    constructor(props) {
         super();
         this.state = {
-            signInClick: false,
+            signUpClick: false,
             loginClick: true
         };
 
-        this.signIn = this.signIn.bind(this);
+        this.signUp = this.signUp.bind(this);
         this.login = this.login.bind(this);
     }
 
-    signIn() {
+    signUp() {
         this.setState(state => ({
-            signInClick: true,
+            signUpClick: true,
             loginClick: false
         }));
     }
 
-    login(){
+    login() {
         this.setState(state => ({
-            signInClick: false,
+            signUpClick: false,
             loginClick: true
         }));
     }
 
     render() {
-        return(
+        return (
             <div>
-                {console.dir("csrf" + this.props.csrf)}
-                {this.state.loginClick ? <NavBarLogin login={this.login} signIn={this.signIn} csrf={this.props.csrf}></NavBarLogin> : null}
-                {this.state.signInClick ? <SignupWindow login={this.login} signIn={this.signIn} csrf={this.props.csrf}></SignupWindow> : null }
+                {this.state.loginClick ? <LoginWindow csrf={this.props.csrf} signUp={this.signUp}></LoginWindow> : null}
+                {this.state.signUpClick ? <SignupForm csrf={this.props.csrf} login={this.login}></SignupForm> : null}
                 <Main></Main>
             </div>
         )
@@ -159,6 +129,6 @@ const getToken = () => {
     });
 };
 
-$(document).ready(function() {
+$(document).ready(function () {
     getToken();
 });

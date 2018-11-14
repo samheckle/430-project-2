@@ -2,21 +2,25 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 const _ = require('underscore');
 
-let DomoModel = {};
+let DataModel = {};
 
 const convertId = mongoose.Types.ObjectId;
 const setName = (name) => _.escape(name).trim();
 
-const DomoSchema = new mongoose.Schema({
+const DataSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
     trim: true,
     set: setName,
   },
-  age: {
+  minutes: {
     type: Number,
     min: 0,
+    required: true,
+  },
+  date: {
+    type: Date,
     required: true,
   },
 
@@ -32,20 +36,20 @@ const DomoSchema = new mongoose.Schema({
   },
 });
 
-DomoSchema.statics.toAPI = (doc) => ({
+DataSchema.statics.toAPI = (doc) => ({
   name: doc.name,
-  age: doc.age,
+  minutes: doc.minutes,
 });
 
-DomoSchema.statics.findByOwner = (ownerId, callback) => {
+DataSchema.statics.findByOwner = (ownerId, callback) => {
   const search = {
     owner: convertId(ownerId),
   };
 
-  return DomoModel.find(search).select('name age').exec(callback);
+  return DataModel.find(search).select('name minutes date').exec(callback);
 };
 
-DomoModel = mongoose.model('Domo', DomoSchema);
+DataModel = mongoose.model('ExerciseData', DataSchema);
 
-module.exports.DomoModel = DomoModel;
-module.exports.DomoSchema = DomoSchema;
+module.exports.DataModel = DataModel;
+module.exports.DataSchema = DataSchema;

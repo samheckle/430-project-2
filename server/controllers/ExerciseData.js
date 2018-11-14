@@ -1,8 +1,8 @@
 const models = require('../models');
-const Domo = models.Domo;
+const Data = models.ExerciseData;
 
 const makerPage = (req, res) => {
-  Domo.DomoModel.findByOwner(req.session.account._id, (err, docs) => {
+  Data.DataModel.findByOwner(req.session.account._id, (err, docs) => {
     if (err) {
       console.log(err);
       return res.status(400).json({ error: 'An error occured' });
@@ -11,24 +11,26 @@ const makerPage = (req, res) => {
   });
 };
 
-const makeDomo = (req, res) => {
-  if (!req.body.name || !req.body.age) {
+const makeData = (req, res) => {
+
+  if (!req.body.name || !req.body.minutes || !req.body.day) {
     return res.status(400).json({ error: 'RAWR! Both name and age are required' });
   }
 
-  const domoData = {
+  const data = {
     name: req.body.name,
-    age: req.body.age,
+    minutes: req.body.minutes,
+    date: req.body.day,
     owner: req.session.account._id,
   };
 
-  const newDomo = new Domo.DomoModel(domoData);
+  const newData = new Data.DataModel(data);
 
-  const domoPromise = newDomo.save();
+  const dataPromise = newData.save();
 
-  domoPromise.then(() => res.json({ redirect: '/maker' }));
+  dataPromise.then(() => res.json({ redirect: '/maker' }));
 
-  domoPromise.catch((err) => {
+  dataPromise.catch((err) => {
     console.log(err);
     if (err.code === 11000) {
       return res.status(400).json({ error: 'Domo already exists' });
@@ -37,13 +39,13 @@ const makeDomo = (req, res) => {
     return res.status(400).json({ error: 'An error occured' });
   });
 
-  return domoPromise;
+  return dataPromise;
 };
 
-const getDomos = (request, response) => {
+const getData = (request, response) => {
   const req = request;
   const res = response;
-  return Domo.DomoModel.findByOwner(req.session.account._id, (err, docs) => {
+  return Data.DataModel.findByOwner(req.session.account._id, (err, docs) => {
     if (err) {
       console.log(err);
       return res.status(400).json({ error: 'An error occurred' });
@@ -52,5 +54,5 @@ const getDomos = (request, response) => {
   });
 };
 module.exports.makerPage = makerPage;
-module.exports.getDomos = getDomos;
-module.exports.make = makeDomo;
+module.exports.getData = getData;
+module.exports.make = makeData;

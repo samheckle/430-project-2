@@ -1,131 +1,184 @@
-$colors:(
-    accent1: #BA3B46,
-    accent2: #7B9EA8,
-    accent3: #ED9B40,
-    main: #191D32,
-    dark1: #282f44,
-);
+$accent1: #BA3B46;
+$accent2: #7B9EA8;
+$accent3: #ED9B40;
+$main: #191D32;
+$dark1: #282f44;
 
-html, body {
+$extra-small: "only screen and (max-width: 600px)";
+$small: "only screen and (min-width: 600px)";
+$medium: "only screen and (min-width: 768px)";
+$large: "only screen and (min-width: 992px)";
+$extra-large: "only screen and (min-width: 1200px)";
+
+
+html,
+body {
     height: 100%;
     width: 100%;
     margin: 0;
     padding: 0;
     overflow-x: hidden;
-    overflow-y:hidden;
-}
-
-#logo {
-    height: 40px;
-    width: 40;
-    padding-top: 5px;
-    float:left;
-    border-radius: 8px;
+    overflow-y: hidden;
+    font-family: 'Open Sans', sans-serif;
 }
 
 nav {
     width: 100%;
     height: 60px;
-    background-color: map-get($colors, accent2);
+
+    @media #{$extra-small} {
+        height: 100px;
+    }
+
+    background-color: $dark1;
+
+    a {
+        color: white;
+        font-size: 1.2em;
+        display: inline-block;
+        padding: 3.5 0;
+        transition: background-color 0.4s ease;
+        text-align: center;
+        margin-left: 2%;
+        font-size: 1.2em;
+        width: 100px;
+        background-color: $accent3;
+        text-decoration: none;
+        border-radius: 4px;
+        border-style: none;
+        position: absolute;
+        top: 14;
+
+        @media #{$extra-small} {
+            position: relative;
+            top: 0;
+            display: block;
+            margin-top: 0;
+        }
+    }
+
+    #loginButton {
+        width: 150px;
+    }
+}
+
+.navBox{
+    margin-left: 2%;
 }
 
 nav:nth-child(1) {
     padding-left: 25px;
 }
 
-.navlink {
-    padding: 5px;
-    padding-top: 12px;
-    padding-left: 20px;
-    color: white;
-    font-size: 1.3em;
-    float: left;
-}
 
-.navlink a, .navlink a:link, .navlink a:visited, .navlink a:hover, .navlink a:active {
+
+.navlink a,
+.navlink a:link,
+.navlink a:visited,
+.navlink a:hover,
+.navlink a:active {
     color: white;
     text-decoration: none;
-    padding: 5px;
+    padding: 3px;
     border-radius: 4px;
-    background-color: map-get($colors, main);
+    background-color: $main;
     transition: background-color 0.4s ease;
+    width: 100px;
+    display: block;
+    margin: auto;
+    text-align: center;
+    margin-left: 2%;
 }
 
 .navlink a:hover {
     transition: background-color 0.8s ease;
-    background-color: map-get($colors, main);
+    background-color: $main;
 }
 
-.domoForm {
+.exerciseForm {
     border: 2px solid #338acc;
     height: 35px;
-    width: 700px;
-    margin-top:0px;
-    padding-top:10px;
+    width: 100%;
+    margin-top: 0px;
+    padding-top: 10px;
     background-color: #55acee;
     border-bottom-right-radius: 4px;
     border-top-right-radius: 4px;
+
+    label{
+        display: inline-block;
+        margin-left: 10px;
+        margin-right: 10px;
+        font-size: 1em;
+        float: left;
+        color: white;
+    }
+    input[type=text] {
+        float: left;
+    }
+    .makeDataSubmit{
+        transition: background-color 0.4s ease;
+        display: inline;
+        width: 90px;
+        background-color: #55acee;
+        border-radius: 2px;
+        color: white;
+        text-decoration: none;
+        margin-left: 10px;
+    }
+
+    .makeDataSubmit:hover {
+        transition: background-color 0.4s ease;
+        background-color: #338acc;
+    }
 }
 
-.domoForm label {
-    display: inline-block;
-    width: 75px;
-    margin-left: 10px;
-    font-size: 1.2em;
-    float: left;
-    color: white;
-}
-
-.domoForm input[type=text] {
-    float:left;
-}
-
-.makeDomoSubmit {
-    transition: background-color 0.4s ease;
-    display: inline;
-    width: 90px;
-    background-color: #55acee;
-    border-radius: 2px;
-    color: white;
-    text-decoration: none;
-}
-
-.makeDomoSubmit:link, .makeDomoSubmit:visited, .makeDomoSubmit:hover, .makeDomoSubmit:active {
-    color: white;
-}
-
-.makeDomoSubmit:hover {
-    transition: background-color 0.4s ease;
-    background-color: #338acc;
-}
 
 .mainForm {
-    float: right;
-    width: 50%;
-    margin-bottom: 0;
+    width: 100%;
 
-    #user{
-        margin: 2%;
+    float: left;
+    margin-bottom: 0;
+    position: relative;
+
+    #user,
+    #pass,
+    #pass2 {
+        margin-left: 2%;
+        text-align: center;
+        font-size: 1.1em;
+        width: 180px;
+        border-radius: 6px;
+
+        @media #{$extra-small} {
+            position: relative;
+            top: 0;
+            display: block;
+            margin-top: 0;
+        }
     }
-    #pass{
-        margin: 2%;
-    }
+
 }
 
 .formSubmit {
     transition: background-color 0.4s ease;
     text-align: center;
-    margin: 0 auto;
+    margin-left: 2%;
     margin-top: 14px;
     font-size: 1.2em;
     width: 100px;
-    background-color: map-get($colors, main);
+    background-color: $accent1;
     padding: 3px 0px;
     color: white;
     text-decoration: none;
+    border-radius: 4px;
+    border-style: none;
 }
 
-.formSubmit:link, .formSubmit:visited, .formSubmit:hover, .formSubmit:active {
+.formSubmit:link,
+.formSubmit:visited,
+.formSubmit:hover,
+.formSubmit:active {
     color: white;
 }
 
@@ -134,20 +187,15 @@ nav:nth-child(1) {
     background-color: #338acc;
 }
 
-#user, #pass, #pass2 {
-    text-align: center;
-    font-size: 1.1em;
-    width: 180px;
-    border-radius: 6px;
-}
-
-#user:focus, #pass:focus, #pass2:focus {
+#user:focus,
+#pass:focus,
+#pass2:focus {
     outline: none;
     box-shadow: 0px 0px 1px 1px #55acee;
 }
 
 #domoMessage {
-    display:none;
+    display: none;
     top: 250px;
     width: 250px;
     height: 650px;
@@ -167,7 +215,7 @@ nav:nth-child(1) {
 #speech {
     height: 120px;
     width: 250px;
-    z-index:300;
+    z-index: 300;
 }
 
 #errorMessage {
@@ -184,7 +232,7 @@ nav:nth-child(1) {
     height: 450px;
     width: 300px;
     -ms-transform: rotate(330deg);
-    -webkit-transform: rotate(330deg); 
+    -webkit-transform: rotate(330deg);
     transform: rotate(330deg);
 }
 
@@ -206,13 +254,13 @@ nav:nth-child(1) {
     border-radius: 4px;
     background-color: #55acee;
     padding: 10px;
-    min-height:60px;
+    min-height: 60px;
     overflow: hidden;
 }
 
 .domo:hover {
     transition: border-color 0.2s ease-out;
-    border-color: rgba(255,255,255, 0.8);
+    border-color: rgba(255, 255, 255, 0.8);
     transition: background-color 2.6s ease-out;
     background-color: #66bfff;
 }
@@ -223,8 +271,8 @@ img.domoFace {
     height: 50px;
     width: 50px;
     border-radius: 4px;
-    margin-top:10px;
-    float:left;
+    margin-top: 10px;
+    float: left;
 }
 
 h3.emptyDomo {
@@ -236,7 +284,7 @@ h3.emptyDomo {
 }
 
 h3.domoName {
-    float:left;
+    float: left;
     width: 200px;
     font-weight: bold;
     padding-left: 65px;
@@ -244,7 +292,7 @@ h3.domoName {
 }
 
 h3.domoAge {
-    float:right;
+    float: right;
     text-align: left;
     width: 100px;
     font-weight: bold;
@@ -257,33 +305,58 @@ h3.domoAge {
 }
 
 .domo:last-child {
-    margin-bottom:10px;
+    margin-bottom: 10px;
 }
 
-#main{ 
+#main {
     background-color: white;
     height: 100%;
 
-    .homeContent{
+    .homeContent {
         height: 90%;
         margin: 1% 0 0 1%;
         width: 32%;
-        float:left;
-    }
-
-    #one{
-        background-color: map-get($colors, accent1);
-    }
-    #two{
-        background-color: map-get($colors, dark1);
+        float: left;
+        background-color: $dark1;
         color: white;
     }
-    #three{
-        background-color: map-get($colors, accent3);
+
+    #one, #two, #three {
+        position: relative;
+
+        img {
+            height: 95%;
+            width: 95%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top:3%;
+
+        }
+
+        p {
+            position: absolute;
+            background: $accent1;
+            top: 50;
+            left: 25%;
+            padding: 2%;
+        }
+    }
+
+    #two {
+        p{
+            background: $accent2;
+        }
+    }
+
+    #three {
+        p{
+            background: $accent3;
+        }
     }
 }
 
-#vis{
+#vis {
     margin: auto;
     text-align: center;
 
