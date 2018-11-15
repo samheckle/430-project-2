@@ -33,6 +33,11 @@ gulp.task('appBundle', () => {
           "path": __dirname+'/hosted',
           "filename": "appBundle.js"
       },
+      optimization:{
+        splitChunks: {
+            chunks: 'all'
+        }
+      },
       module: {
           rules: [
               {

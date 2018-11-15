@@ -4,6 +4,7 @@ const redirect = (response) => {
     window.location = response.redirect;
 };
 
+
 const sendAjax = (type, action, data, success) => {
     $.ajax({
         cache: false,
@@ -18,3 +19,8 @@ const sendAjax = (type, action, data, success) => {
         }
     })
 }
+
+const handleError = (message) => {
+    $("#errorMessage").text(message);
+    $("#domoMessage").animate({width:'toggle'},350);
+};

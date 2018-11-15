@@ -1,4 +1,4 @@
-import {XYPlot, LineSeries, VerticalGridLines, HorizontalGridLines, XAxis, YAxis} from 'react-vis';
+import {XYPlot, VerticalBarSeries, VerticalGridLines, HorizontalGridLines, XAxis, YAxis} from 'react-vis';
 import $ from "jquery";
 
 const sendAjax = (type, action, data, success) => {
@@ -26,7 +26,6 @@ const handleDomo = (e) => {
     e.preventDefault();
     $("#domoMessage").animate({ width: 'hide' }, 350);
 
-    console.dir($("#minutes").val());
     if ($("#exerciseText").val() == '' || $("#minutes").val() == '') {
         handleError("All fields required");
         return false;
@@ -42,7 +41,6 @@ const handleDomo = (e) => {
 const DomoForm = (props) => {
     return (
         <form id="exerciseForm" onSubmit={handleDomo} name="exerciseForm" action="/maker" method="POST" className="exerciseForm">
-            {console.dir("this " + props.csrf)}
             <label htmlFor="name">Exercise: </label>
             <input id="exerciseText" type="text" name="name" placeholder="Exercise Type ie. Run" />
             <label htmlFor="minutes">Time Worked Out: </label>
@@ -64,11 +62,12 @@ const DomoList = function (props) {
         );
     }
 
-    const domoNodes = props.domos.map(function (domo) {
+    const domoNodes = props.domos.map(function (data) {
         return (
-            <div key={domo._id} className="domo">
-                <h3 className="domoName"> Name: {domo.name} </h3>
-                <h3 className="domoAge"> Age: {domo.age} </h3>
+            <div key={data._id} className="dataObj">
+                <h3 className="activity"> {data.name} </h3>
+                <h3 className="timeof"> {data.minutes} minutes</h3>
+                <h3 className="date"> {data.date.substring(0,10)} </h3>
             </div>
         );
     });
@@ -81,6 +80,7 @@ const DomoList = function (props) {
 };
 
 const Graph = (props) => {
+    console.dir(props.data);
     const data = [
         { x: 0, y: 8 },
         { x: 1, y: 5 },
@@ -94,13 +94,25 @@ const Graph = (props) => {
         { x: 9, y: 0 }
     ];
 
+    let data1 = props.data.map(obj =>{
+        var newObj ={};
+        newObj.x = obj.date.substring(5,10);
+        newObj.y = obj.minutes;
+        return newObj;
+    });
+
+    console.dir(JSON.stringify(data1));
+
     return (
-        <XYPlot height={300} width={300}>
+        <XYPlot height={300} width={300} xType={"ordinal"}>
+            <VerticalBarSeries data={data1} />
             <VerticalGridLines />
             <HorizontalGridLines />
-            <XAxis />
-            <YAxis />
-            <LineSeries data={data} />
+            <XAxis barWidth={.2} />
+            <g transform={`translate(${300 / 2}, ${300 / 2}`}> <text>Day </text></g>
+            <YAxis >
+            <g transform={"translate(40, 0)"} className="rv-xy-plot__axis__title"><g transform={"translate(16, 6) rotate(-90)"} style={{textAnchor: "end"}}><text>Length of Workout (minutes)</text></g></g>
+            </YAxis>
         </XYPlot>
     );
 
@@ -108,28 +120,33 @@ const Graph = (props) => {
 
 const loadDomosFromServer = () => {
     sendAjax('GET', '/getDomos', null, (data) => {
+
+        ReactDOM.render(
+            <Graph data={data.domos}/>,
+            document.querySelector("#vis")
+        )
+
         ReactDOM.render(
             <DomoList domos={data.domos} />,
-            document.querySelector("#domos")
+            document.querySelector("#data")
         );
     });
 };
 
 const setup = function (csrf) {
-    console.dir(csrf);
     ReactDOM.render(
         <DomoForm csrf={csrf} />,
         document.querySelector("#makeDomo")
     );
 
     ReactDOM.render(
-        <Graph />,
+        <Graph data={[]}/>,
         document.querySelector("#vis")
     )
 
     ReactDOM.render(
         <DomoList domos={[]} />,
-        document.querySelector("#domos")
+        document.querySelector("#data")
     );
 
     loadDomosFromServer();

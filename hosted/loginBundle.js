@@ -215,3 +215,8 @@ var sendAjax = function sendAjax(type, action, data, success) {
         }
     });
 };
+
+var handleError = function handleError(message) {
+    $("#errorMessage").text(message);
+    $("#domoMessage").animate({ width: 'toggle' }, 350);
+};
