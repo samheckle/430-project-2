@@ -12,7 +12,6 @@ const makerPage = (req, res) => {
 };
 
 const makeData = (req, res) => {
-
   if (!req.body.name || !req.body.minutes || !req.body.day) {
     return res.status(400).json({ error: 'RAWR! Both name and age are required' });
   }

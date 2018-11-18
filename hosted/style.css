@@ -36,8 +36,37 @@ nav {
         top: 0;
         display: block;
         margin-top: 0; } }
+    nav a#add {
+      width: 150px; }
+    nav a#premium {
+      float: right;
+      background-color: #BA3B46;
+      position: relative; }
+    nav a.logout {
+      position: relative;
+      float: right;
+      margin-right: 2%; }
   nav #loginButton {
     width: 150px; }
+  nav #changePass {
+    float: right;
+    width: 200px;
+    background-color: #7B9EA8;
+    position: relative; }
+
+#addFake {
+  color: white;
+  display: inline-block;
+  padding: 3.5 3.5;
+  transition: background-color 0.4s ease;
+  text-align: center;
+  margin-left: 2%;
+  font-size: .8em;
+  background-color: #ED9B40;
+  text-decoration: none;
+  border-radius: 4px;
+  border-style: none;
+  font-weight: normal; }
 
 .navBox {
   margin-left: 2%; }
@@ -68,36 +97,38 @@ nav:nth-child(1) {
   transition: background-color 0.8s ease;
   background-color: #191D32; }
 
-.exerciseForm {
-  border: 2px solid #338acc;
-  height: 35px;
-  width: 100%;
-  margin-top: 0px;
-  padding-top: 10px;
-  background-color: #55acee;
-  border-bottom-right-radius: 4px;
-  border-top-right-radius: 4px; }
-  .exerciseForm label {
+.exerciseForm, .passForm {
+  background-color: #191D32;
+  opacity: 1;
+  width: 50%;
+  position: absolute;
+  top: 20%;
+  left: 20%;
+  border-radius: 20px;
+  text-align: center;
+  font-size: 24px;
+  padding: 5%; }
+  .exerciseForm label, .passForm label {
     display: inline-block;
     margin-left: 10px;
     margin-right: 10px;
     font-size: 1em;
-    float: left;
     color: white; }
-  .exerciseForm input[type=text] {
-    float: left; }
-  .exerciseForm .makeDataSubmit {
+  .exerciseForm input, .passForm input {
+    display: block;
+    margin: auto;
+    margin-bottom: 5%; }
+  .exerciseForm .makeDataSubmit, .passForm .makeDataSubmit {
     transition: background-color 0.4s ease;
     display: inline;
-    width: 90px;
-    background-color: #55acee;
+    background-color: #282f44;
     border-radius: 2px;
     color: white;
     text-decoration: none;
     margin-left: 10px; }
-  .exerciseForm .makeDataSubmit:hover {
+  .exerciseForm .makeDataSubmit:hover, .passForm .makeDataSubmit:hover {
     transition: background-color 0.4s ease;
-    background-color: #338acc; }
+    background-color: #282f44; }
 
 .mainForm {
   width: 100%;
@@ -183,7 +214,7 @@ nav:nth-child(1) {
 
 .dataObj {
   width: 30%;
-  background-color: #55acee;
+  background-color: #ED9B40;
   display: inline-block;
   overflow: hidden;
   margin: 1.5%; }
@@ -191,7 +222,7 @@ nav:nth-child(1) {
     transition: border-color 0.2s ease-out;
     border-color: rgba(255, 255, 255, 0.8);
     transition: background-color 2.6s ease-out;
-    background-color: #66bfff; }
+    background-color: #efa757; }
 
 h3.activity {
   font-weight: bold;
@@ -205,7 +236,7 @@ h3.timeof, h3.date {
   font-size: 1.5em;
   font-weight: normal; }
 
-h3.emptyDomo {
+h3.empty {
   width: 400px;
   font-size: 1.5em;
   margin: 0 auto;
@@ -242,7 +273,8 @@ h3.emptyDomo {
       background: #BA3B46;
       top: 50;
       left: 25%;
-      padding: 2%; }
+      padding: 2%;
+      border-radius: 4px; }
   #main #two p {
     background: #7B9EA8; }
   #main #three p {
@@ -250,9 +282,31 @@ h3.emptyDomo {
 
 #vis {
   margin: auto;
-  text-align: center; }
+  text-align: center;
+  display: none; }
   #vis .rv-xy-plot {
     margin: auto;
     fill: none; }
   #vis .rv-xy-plot__axis {
-    fill: black; }
+    fill: #282f44; }
+  #vis .rv-xy-plot__inner {
+    height: 500; }
+
+rect {
+  fill: #191D32 !important;
+  stroke: #191D32 !important; }
+
+#overlayFormExercise,
+#overlayFormPassword {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  visibility: hidden;
+  display: none; }
+
+.graph {
+  display: inline-block; }

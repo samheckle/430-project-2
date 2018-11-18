@@ -1,8 +1,8 @@
 const handleLogin = (e) => {
     e.preventDefault();
-    $("#domoMessage").animate({ width: 'hide' }, 350);
+
     if ($("#user").val() == '' || $("#pass").val() == '') {
-        handleError("RAWR! Username or password is empty");
+        handleError("Username or password is empty.");
         return false;
     }
 
@@ -12,8 +12,6 @@ const handleLogin = (e) => {
 
 const handleSignup = (e) => {
     e.preventDefault();
-
-    $("#domoMessage").animate({ width: 'hide' }, 350);
 
     if ($("#user").val() == '' || $("#pass").val() == '' || $("#pass2").val() == '') {
         handleError("All fields required");
@@ -64,18 +62,17 @@ class Main extends React.Component {
             <div id="main">
                 <div className="homeContent" id="one">
                     <img src="./assets/img/workout1.jpg"></img>
-                    <p>this describes what the app does</p>
+                    <p>Join our userbase to track your own fitness data!</p>
                 </div>
                 <div className="homeContent" id="two">
 
                     <img src="./assets/img/workout2.jpg"></img>
-                    <p>this describes what the app could do for you</p>
+                    <p>Conviently displays data!</p>
 
                 </div>
                 <div className="homeContent" id="three">
-
-                    <img src="./assets/img/workout2.jpg"></img>
-                    <p>wowee sign up </p>
+                    <img src="./assets/img/workout3.jpg"></img>
+                    <p>Sign up today!</p>
 
                 </div>
             </div>

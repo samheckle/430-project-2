@@ -64,8 +64,6 @@ app.set('views', `${__dirname}/../views`);
 
 app.use(csrf());
 app.use((err, req, res, next) => {
-  console.dir(req.body);
-  console.dir(err.code);
   if (err.code !== 'EBADCSRFTOKEN') return next(err);
 
   console.log('Missing CSRF token');

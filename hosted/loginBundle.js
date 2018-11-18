@@ -10,9 +10,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var handleLogin = function handleLogin(e) {
     e.preventDefault();
-    $("#domoMessage").animate({ width: 'hide' }, 350);
+
     if ($("#user").val() == '' || $("#pass").val() == '') {
-        handleError("RAWR! Username or password is empty");
+        handleError("Username or password is empty.");
         return false;
     }
 
@@ -22,8 +22,6 @@ var handleLogin = function handleLogin(e) {
 
 var handleSignup = function handleSignup(e) {
     e.preventDefault();
-
-    $("#domoMessage").animate({ width: 'hide' }, 350);
 
     if ($("#user").val() == '' || $("#pass").val() == '' || $("#pass2").val() == '') {
         handleError("All fields required");
@@ -102,7 +100,7 @@ var Main = function (_React$Component) {
                     React.createElement(
                         "p",
                         null,
-                        "this describes what the app does"
+                        "Join our userbase to track your own fitness data!"
                     )
                 ),
                 React.createElement(
@@ -112,17 +110,17 @@ var Main = function (_React$Component) {
                     React.createElement(
                         "p",
                         null,
-                        "this describes what the app could do for you"
+                        "Conviently displays data!"
                     )
                 ),
                 React.createElement(
                     "div",
                     { className: "homeContent", id: "three" },
-                    React.createElement("img", { src: "./assets/img/workout2.jpg" }),
+                    React.createElement("img", { src: "./assets/img/workout3.jpg" }),
                     React.createElement(
                         "p",
                         null,
-                        "wowee sign up "
+                        "Sign up today!"
                     )
                 )
             );
@@ -195,9 +193,7 @@ var getToken = function getToken() {
 $(document).ready(function () {
     getToken();
 });
-
 var redirect = function redirect(response) {
-    $("#domoMessage").animate({ width: 'hide' }, 350);
     window.location = response.redirect;
 };
 
@@ -217,6 +213,5 @@ var sendAjax = function sendAjax(type, action, data, success) {
 };
 
 var handleError = function handleError(message) {
-    $("#errorMessage").text(message);
-    $("#domoMessage").animate({ width: 'toggle' }, 350);
+    alert("Error: " + message);
 };

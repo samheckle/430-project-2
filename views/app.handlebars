@@ -14,17 +14,19 @@
 </head>
 <body>
   <nav>
-    <div class="navlink"><a href="/logout">Log out</a></div>
+    <div class="navlink"><a id="add" href="#">Add Exercise</a></div>
+    <div class="navlink"><a class="logout" href="/logout">Log out</a></div>
+    <div class="navlink"><a id="premium" href="#">Premium</a></div>
+    <div class="navlink"><a id="changePass" href="#">Change Password</a></div>
   </nav>
-  <section id="makeDomo">
-  </section>
+  <div id="overlayFormExercise">
+  </div>
+  <div id="overlayFormPassword">
+  </div>
   <section id="vis">
   </section>
   <section id="data">
   </section>
-  <div id="domoMessage"><img id="speech" src="/assets/img/speech.png" alt="speech box"/>
-    <h3><span id="errorMessage"></span></h3><img id="domo" src="assets/img/domo.png" alt="domo"/>
-  </div>
   <script src="/assets/appBundle.js"></script>
 </body>
 </html>
